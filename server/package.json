@@ -1,31 +1,28 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "private": true,
+  "description": "Sleep tracking service server",
+  "main": "dist/index.js",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "test": "vitest"
   },
   "dependencies": {
-    "@fastify/cors": "^11.0.1",
-    "better-sqlite3": "^11.9.1",
-    "dotenv-safe": "^9.1.0",
-    "drizzle-orm": "^0.42.0",
-    "fastify": "^5.3.2"
+    "better-sqlite3": "^11.10.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "reflect-metadata": "^0.2.1",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.13",
-    "@types/dotenv-safe": "^8.1.6",
-    "@types/node": "^22.14.1",
-    "pino-pretty": "^13.0.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.2"
-  },
-  "engines": {
-    "node": ">=22.0.0"
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3",
+    "vitest": "^1.1.3"
   }
 }

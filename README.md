@@ -1,85 +1,101 @@
-# 풀스택 서비스 보일러 플레이트
+# Deep Sleep - 수면 관리 서비스
 
-## 프로젝트 개요
+![Deep Sleep](https://img.shields.io/badge/Deep_Sleep-수면_관리_서비스-orange)
 
-이 보일러 플레이트는 풀스택 웹 애플리케이션 개발을 위한 기본 구조를 제공합니다. monorepo 구조로 클라이언트와 서버를 효율적으로 관리하며, 현대적인 웹 개발 기술 스택을 활용합니다.
+Deep Sleep은 수면 패턴을 추적하고 관리하는 데 도움을 주는 애플리케이션입니다.
+
+## 주요 기능
+
+### 1. 수면 기록 관리
+- 취침 시간과 기상 시간 기록
+- 수면 품질 평가 (1-10점)
+- 특이사항 메모 기능
+
+### 2. 직관적인 UI/UX
+- 깔끔하고 모던한 디자인
+- 반응형 웹 디자인
+- 사용자 친화적인 인터페이스
+
+## 사용 방법
+
+1. 메인 화면에서 '새 기록 추가' 버튼 클릭
+2. 취침 시간과 기상 시간 입력
+3. 수면 품질 선택 (1-10점)
+4. 특이사항이 있다면 메모 작성
+5. 저장하기 버튼 클릭
+
+## 주요 화면
+
+### 메인 화면
+- 수면 기록 목록 확인
+- 새 기록 추가 버튼
+- 기록 수정/삭제 기능
+
+### 기록 입력/수정 화면
+- 날짜 및 시간 선택
+- 수면 품질 평가
+- 특이사항 메모
+
 
 ## 기술 스택
 
 ### 공통
+- 패키지 매니저: pnpm
+- TypeScript
+- Node.js
 
-- 패키지 매니저: pnpm (workspace 기능 활용)
-- 언어: TypeScript
-- Node.js 버전: 22.x
-- 테스트: Vitest
-- 코드 품질: Prettier
+### 프론트엔드
+- React
+- Chakra UI
+- React Router
+- Axios
 
-### 클라이언트
+### 백엔드
+- Express
+- TypeORM
+- SQLite
 
-- 프레임워크: React
-- 빌드 도구: Vite
-- 라우팅: React Router
-- 스타일링: TailwindCSS
+## 시작하기
 
-### 서버
+### 요구사항
+- Node.js 14.0.0 이상
+- pnpm 8.0.0 이상
 
-- 프레임워크: Fastify
-- 데이터베이스: SQLite with DirzzleORM
 
-## 설치 및 실행
+### 설치 방법
 
-### 초기 설치
-
+1. 저장소 클론
 ```bash
-# 프로젝트 루트 디렉토리에서 실행
+git clone [repository-url]
+cd deep-sleep
+```
+
+2. pnpm 설치 (없는 경우)
+```bash
+npm install -g pnpm
+```
+
+3. 의존성 설치
+```bash
+# 프로젝트 루트 디렉토리에서 모든 의존성 설치
 pnpm install
 ```
 
-### 개발 서버 실행
-
+4. 환경 설정
 ```bash
-# 클라이언트 및 서버 동시 실행
+# 서버 포트 설정 (기본값: 8000)
+# 클라이언트 포트 설정 (기본값: 3000)
+```
+
+5. 실행
+```bash
+# 개발 모드로 클라이언트와 서버 동시 실행
 pnpm dev
 
-# 클라이언트만 실행
-pnpm dev:client
-
-# 서버만 실행
+# 또는 개별적으로 실행
+# 서버 실행
 pnpm dev:server
+
+# 클라이언트 실행
+pnpm dev:client
 ```
-
-### 테스트 실행
-
-```bash
-# 클라이언트 테스트
-pnpm test:client
-
-# 서버 테스트
-pnpm test:server
-
-# 모든 테스트 실행
-pnpm test
-```
-
-### 빌드
-
-```bash
-# 클라이언트 및 서버 빌드
-pnpm build
-```
-
-## 환경 변수 설정
-
-- 클라이언트: `client/.env` 파일에 설정 (예시는 `client/.env.example` 참조)
-- 서버: `server/.env` 파일에 설정 (예시는 `server/.env.example` 참조)
-
-## API 엔드포인트
-
-서버는 다음과 같은 기본 API 엔드포인트를 제공합니다:
-
-- `GET /api/health`: 서버 상태 확인
-- `GET /api/users`: 유저 목록 조회
-- `GET /api/users/:id`: 특정 유저 조회
-- `POST /api/users`: 새 유저 추가
-- `PUT /api/users/:id`: 유저 정보 수정
-- `DELETE /api/users/:id`: 유저 삭제
