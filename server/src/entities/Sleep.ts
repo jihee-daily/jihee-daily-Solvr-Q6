@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
-@Entity()
+@Entity('sleep_record')
 export class Sleep {
     @PrimaryGeneratedColumn()
     id: number;

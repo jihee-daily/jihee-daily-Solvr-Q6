@@ -8,6 +8,8 @@ import {
   Flex,
   Badge,
   VStack,
+  Heading,
+  Divider,
 } from "@chakra-ui/react";
 import { FiEdit, FiTrash2, FiMoon, FiSun } from "react-icons/fi";
 import { format } from "date-fns";
@@ -40,7 +42,7 @@ const SleepList = () => {
       console.log('서버 응답:', response.data);
       setSleeps(response.data);
     } catch (error) {
-      console.error('데이터 로딩 에러:', error);
+      console.error('데이터 로드 에러:', error);
       toast({
         title: "데이터 로드 실패",
         description: "수면 기록을 불러오는데 실패했습니다.",
@@ -88,28 +90,11 @@ const SleepList = () => {
 
   return (
     <Box>
-      <Box mb={6} display="flex" justifyContent="flex-end">
-        <Button
-            as={Link}
-            to="/add"
-            bgGradient="linear(to-r, orange.400, yellow.400)"
-            color="white"
-            px={6}
-            borderRadius="full"
-            _hover={{
-              bgGradient: "linear(to-r, orange.500, yellow.500)",
-              transform: "translateY(-2px)",
-            }}
-            _active={{
-              bgGradient: "linear(to-r, orange.600, yellow.600)",
-            }}
-            transition="all 0.2s"
-            fontWeight="bold"
-            boxShadow="md"
-          >
-            새 기록 추가
-          </Button>
-      </Box>
+      <Divider mb={6} />
+      <Heading size="md" mb={6} color="gray.700">
+        모든 수면 기록
+      </Heading>
+
 
       {sleeps.length === 0 ? (
         <Box
