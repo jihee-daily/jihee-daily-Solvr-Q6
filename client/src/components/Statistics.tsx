@@ -12,9 +12,10 @@ import {
   Legend,
 } from "chart.js";
 import { Chart as ReactChartJS, Line, Bar, Radar } from "react-chartjs-2";
-import { Box, Grid, Heading, VStack, Text } from "@chakra-ui/react";
+import { Box, Grid, Heading, VStack, Text, Button, Spinner, useToast, Alert, AlertIcon, Divider } from "@chakra-ui/react";
 import axios from "axios";
 import { format, parseISO } from "date-fns";
+import ReactMarkdown from "react-markdown";
 
 // Chart.js 컴포넌트 등록
 ChartJS.register(
@@ -39,6 +40,9 @@ interface SleepRecord {
 
 const Statistics = () => {
   const [sleepRecords, setSleepRecords] = useState<SleepRecord[]>([]);
+  const [advice, setAdvice] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -343,6 +347,48 @@ const Statistics = () => {
     },
   };
 
+  const handleGetAdvice = async () => {
+    setIsLoading(true);
+    setAdvice("");
+    try {
+      const response = await fetch("http://localhost:8000/api/sleep/advice");
+
+      if (!response.ok) {
+        throw new Error(`서버 오류: ${response.statusText}`);
+      }
+
+      const contentType = response.headers.get("content-type");
+
+      // 스트리밍 응답 처리
+      if (contentType && contentType.includes("text/plain") && response.body) {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          setAdvice((prev) => prev + chunk);
+        }
+      } else { // 일반 JSON 응답 처리 (데이터 부족 등)
+        const text = await response.json();
+        setAdvice(text);
+      }
+
+    } catch (error) {
+      console.error("AI 조언 요청 실패:", error);
+      toast({
+        title: "AI 조언 생성 실패",
+        description: "오류가 발생했습니다. 서버 로그를 확인하거나 잠시 후 다시 시도해주세요.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (sleepRecords.length === 0) {
     return (
       <Box textAlign="center" py={10}>
@@ -354,8 +400,8 @@ const Statistics = () => {
 
   return (
     <Box p={{ base: 4, md: 8 }} maxW="container.xl" mx="auto">
-      <VStack spacing={8}>
-        <Heading size="lg" color="black.400">통계 보기</Heading>
+      <VStack spacing={8} align="stretch">
+        <Heading size="lg" color="green.600" textAlign="center">수면 통계</Heading>
         <Grid templateColumns={{ base: "1fr" }} gap={8} width="100%">
           <Box p={4} borderRadius="lg" boxShadow="base" bg="white">
             <Heading size="md" mb={4}>일별 취침/기상 시간</Heading>
@@ -372,6 +418,39 @@ const Statistics = () => {
             <Radar data={dayOfWeekChartData} options={commonOptions} />
           </Box>
         </Grid>
+
+        {/* AI 조언 섹션 */}
+        <Divider my={8} />
+        <Box>
+          <Heading size="lg" color="green.600" textAlign="center" mb={4}>
+            💡 AI 수면 분석
+          </Heading>
+          <VStack spacing={4}>
+            <Button
+              onClick={handleGetAdvice}
+              isLoading={isLoading}
+              loadingText="분석 중..."
+              colorScheme="green"
+              size="lg"
+            >
+              AI 수면 분석 및 조언 받기
+            </Button>
+            {isLoading && <Spinner size="xl" />}
+            {advice && (
+              <Box
+                p={5}
+                mt={4}
+                borderWidth="1px"
+                borderRadius="lg"
+                boxShadow="md"
+                bg="white"
+                width="100%"
+              >
+                <ReactMarkdown>{advice}</ReactMarkdown>
+              </Box>
+            )}
+          </VStack>
+        </Box>
       </VStack>
     </Box>
   );
