@@ -1,9 +1,21 @@
-# Deep Sleep - 수면 관리 서비스
+# 🌙 Deep Sleep - 수면 관리 서비스
 
 ![Deep Sleep](https://img.shields.io/badge/Deep_Sleep-수면_관리_서비스-orange)
 
 Deep Sleep은 수면 패턴을 추적하고 관리하는 데 도움을 주는 애플리케이션입니다.
 
+---
+
+## 🎬 데모
+
+### 📱 주요 화면
+
+<p align="center">
+  <img width="75%" src="https://github.com/user-attachments/assets/d0a409ad-d905-4ff9-9b50-7a4b6f63cfed" alt="Deep Sleep Demo 1" />
+  <img width="20%" src="https://github.com/user-attachments/assets/60952750-7d37-497c-a1b5-858c2fb8f6f3" alt="Deep Sleep Demo 2" />
+</p>
+
+---
 ## 주요 기능
 
 ### 1. 수면 기록 관리
